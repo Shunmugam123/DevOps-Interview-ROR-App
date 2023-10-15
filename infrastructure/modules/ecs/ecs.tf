@@ -23,11 +23,11 @@ resource "aws_ecs_task_definition" "demo_app_task" {
         {
             "name": "${var.demo_app_task_name}",
             "image": "${var.ecr_repo_url}",
-            "essential": true
+            "essential": true,
             "portMappings": [
                 {
                     "containerPort": ${var.container_port},
-                    "hostPort": ${var.conatiner_port}
+                    "hostPort": ${var.container_port}
                 }
             ],
             "memory": 1024,
@@ -39,10 +39,10 @@ resource "aws_ecs_task_definition" "demo_app_task" {
     network_mode = "awsvpc"
     memory = 1024
     cpu = 512
-    execution_role_arn = aws_iam_role.aws_ecs_task_execution_role.arn
+    execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 }
 
-resource "aws_iam_role" "aws_ecs_task_execution_role" {
+resource "aws_iam_role" "ecs_task_execution_role" {
     name               = var.ecs_task_execution_role_name
     assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
@@ -52,7 +52,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
     policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_elb" "application_load_balancer" {
+resource "aws_alb" "application_load_balancer" {
     name               = var.application_load_balancer_name
     load_balancer_type = "application"
     subnets = [
@@ -64,14 +64,14 @@ resource "aws_elb" "application_load_balancer" {
 }
 
 resource "aws_security_group" "load_balancer_security_group" {
-    ingress = {
+    ingress {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
 
-    egress = {
+    egress {
         from_port   = 0
         to_port     = 0
         protocol    = "-1"
@@ -113,7 +113,7 @@ resource "aws_ecs_service" "demo_app_service" {
     network_configuration {
       subnets           = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
       assign_public_ip  = true
-      security_groups   = ["{aws_security_group.service_security_group_id}"]
+      security_groups   = ["${aws_security_group.service_security_group.id}"]
     }  
 }
 
