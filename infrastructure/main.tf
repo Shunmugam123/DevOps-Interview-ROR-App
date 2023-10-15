@@ -40,7 +40,7 @@ module "ecsCluster" {
     container_port               = local.container_port
     demo_app_task_name           = local.demo_app_task_name
     ecs_task_execution_role_name = local.ecs_task_execution_role_name
-
+    
     application_load_balancer_name = local.application_load_balancer_name
     target_group_name              = local.target_group_name
     demo_app_service_name          = local.demo_app_service_name
