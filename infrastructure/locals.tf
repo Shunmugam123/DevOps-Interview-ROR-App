@@ -1,6 +1,6 @@
 locals {
-    bucket_name = "cc-tf-demo"
-    table_name  = "ccTfDemo"
+  bucket_name = "cc-tf-demo2"
+  table_name  = "ccTfDemo2"
 
-    ecr_repo_name = "demo-app-ecr-repo"
+  ecr_repo_name = "demo-app-ecr-repo"
 }
