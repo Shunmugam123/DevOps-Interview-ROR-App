@@ -30,4 +30,6 @@ resource "aws_db_instance" "default" {
   password             = "mypassword"
   parameter_group_name = "default.postgres11"
   skip_final_snapshot  = true
+  vpc_security_group_ids = [aws_security_group.rds.id]
+  subnet_group_name    = "my-subnet-group"
 }
