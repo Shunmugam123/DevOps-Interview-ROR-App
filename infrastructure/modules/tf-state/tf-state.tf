@@ -19,6 +19,22 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_c
   }
 }
 
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "private" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "eu-central-1a"
+}
+
+resource "aws_security_group" "rds" {
+  name        = "rds_security_group"
+  description = "Allow traffic to RDS instance"
+  vpc_id      = aws_vpc.main.id
+}
+
 resource "aws_db_instance" "default" {
   allocated_storage    = 20
   storage_type         = "gp2"
@@ -30,5 +46,5 @@ resource "aws_db_instance" "default" {
   password             = "mypassword"
   parameter_group_name = "default.postgres11"
   skip_final_snapshot  = true
-  subnet_group_name    = "my-subnet-group"
+  db_subnet_group_name    = "my-subnet-group"
 }
