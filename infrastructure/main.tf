@@ -29,7 +29,7 @@ module "ecrRepo" {
     ecr_repo_name = local.ecr_repo_name
 }
 
-module "ecrRepo" {
+module "ecsCluster" {
     source = "./modules/ecs"
 
     demo_app_cluster_name = local.demo_app_cluster_name
