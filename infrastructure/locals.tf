@@ -1,4 +1,4 @@
 locals {
-  bucket_name = "s3-RoR"
-  table_name  = "table-RoR"
+  bucket_name = "s3-ror"
+  table_name  = "tableRoR"
   }
