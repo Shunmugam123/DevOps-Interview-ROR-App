@@ -1,10 +1,9 @@
 locals {
   bucket_name = "cc-tf-demo2"
   table_name  = "ccTfDemo2"
-
   ecr_repo_name = "demo-app-ecr-repo"
 
-  demo_app_cluster_name          = "demo_app_cluster"
+  demo_app_cluster_name          = "demo-app-cluster"
   availability_zones             = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
   demo_app_task_family           = "demo-app-task"
   container_port                 = 3000
