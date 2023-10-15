@@ -96,3 +96,39 @@ resource "aws_lb_listener" "listener" {
       target_group_arn = aws_lb_target_group.target_group.arn
     }
 }
+
+resource "aws_ecs_service" "demo_app_service" {
+    name            = var.demo_app_service_name
+    cluster         = aws_ecs_cluster.demo_app_cluster.id
+    task_definition = aws_ecs_task_definition.demo_app_task.arn
+    launch_type = "FARGATE"
+    desired_count = 1
+
+    load_balancer {
+      target_group_arn = aws_lb_target_group.target_group.arn
+      container_name = aws_ecs_task_definition.demo_app_task.family
+      container_port = var.container_port
+    }
+
+    network_configuration {
+      subnets           = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
+      assign_public_ip  = true
+      security_groups   = ["{aws_security_group.service_security_group_id}"]
+    }  
+}
+
+resource "aws_security_group" "service_security_group" {
+    ingress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
+    }
+
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+}
