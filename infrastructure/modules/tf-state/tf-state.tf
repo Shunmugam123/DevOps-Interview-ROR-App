@@ -23,16 +23,28 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 }
 
-resource "aws_subnet" "private" {
+resource "aws_subnet" "my-subnet1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "eu-central-1a"
+}
+
+resource "aws_subnet" "my-subnet2" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "eu-central-1b"
 }
 
 resource "aws_security_group" "rds" {
   name        = "rds_security_group"
   description = "Allow traffic to RDS instance"
   vpc_id      = aws_vpc.main.id
+}
+
+resource "aws_db_subnet_group" "my_subnet_group" {
+  name        = "my-subnet-group"
+  description = "My Subnet Group"
+  subnet_ids  = [aws_subnet.my-subnet1.id,aws_subnet.my-subnet2.id]
 }
 
 resource "aws_db_instance" "default" {
