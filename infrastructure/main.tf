@@ -25,4 +25,7 @@ module "ecrRepo" {
     source = "./modules/ecr"
 
     ecr_repo_name = local.ecr_repo_name
+    ecr_repo_name1 = local.ecr_repo_name1
+    ecr_repo_name2 = local.ecr_repo_name2
+    ecr_repo_name3 = local.ecr_repo_name3
 }
