@@ -39,10 +39,11 @@ module "ecsCluster" {
     ror_app_task_family          = local.ror_app_task_family
     ecr_repo_url                 = module.ecrRepo.repository_url
     ecr_repo_url1                = module.ecrRepo.repository_url1
-    ecr_repo_ur2                 = module.ecrRepo.repository_ur2
-    ecr_repo_ur3                 = module.ecrRepo.repository_ur3
+    ecr_repo_url2                = module.ecrRepo.repository_url2
+    ecr_repo_url3                = module.ecrRepo.repository_url3
     container_port               = local.container_port
-    container_port1               = local.container_port1
+    container_port1              = local.container_port1
+    container_port2              = local.container_port2
     ror_app_task_name            = local.ror_app_task_name
     ror_app_task_name1           = local.ror_app_task_name1
     ror_app_task_name2           = local.ror_app_task_name2
