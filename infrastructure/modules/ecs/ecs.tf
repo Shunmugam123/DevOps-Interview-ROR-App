@@ -77,7 +77,7 @@ resource "aws_ecs_task_definition" "ror_app_task" {
                 },
                 {
                     "name": "RDS_USERNAME",
-                    "value": "myuser"
+                    "value": "postgres"
                 },
                 {
                     "name": "RDS_PASSWORD",
