@@ -8,6 +8,6 @@ variable "bucket_name" {
 }
 
 variable "table_name" {
-  description = "Remote DynamoDB Table Name"
+  description = "Remote Postgres Table Name"
   type        = string
 }
