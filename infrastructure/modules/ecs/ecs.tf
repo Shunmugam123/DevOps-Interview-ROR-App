@@ -2,8 +2,6 @@ resource "aws_ecs_cluster" "ror_app_cluster" {
   name = var.ror_app_cluster_name
 }
 
-resource "aws_default_vpc" "default_vpc" {}
-
 resource "aws_default_subnet" "default_subnet_a" {
   availability_zone = var.availability_zones[0]
 }
@@ -57,7 +55,7 @@ resource "aws_ecs_task_definition" "ror_app_task" {
                 }
             ],
             "memory": 512,
-            "cpu": 256
+            "cpu": 256,
             "links": ["rails_app"]
         },
          {
@@ -72,38 +70,38 @@ resource "aws_ecs_task_definition" "ror_app_task" {
             ],
             "memory": 512,
             "cpu": 256,
-            environment = [
+            "environment": [
                 {
-                    name = "RDS_DB_NAME"
-                    value = "rails"
+                    "name": "RDS_DB_NAME",
+                    "value": "rails"
                 },
                 {
-                    name = "RDS_USERNAME"
-                    value = "myuser"
+                    "name": "RDS_USERNAME",
+                    "value": "myuser"
                 },
                 {
-                    name = "RDS_PASSWORD"
-                    value = "mypassword"
+                    "name": "RDS_PASSWORD",
+                    "value": "mypassword"
                 },
                 {
-                    name = "RDS_HOSTNAME"
-                    value = "postgres"
+                    "name": "RDS_HOSTNAME",
+                    "value": "postgres"
                 },
                 {
-                    name = "RDS_PORT"
-                    value = "5433"
+                    "name": "RDS_PORT",
+                    "value": "5433"
                 },
                 {
-                    name = "S3_BUCKET_NAME"
-                    value = "s3-ror"
+                    "name": "S3_BUCKET_NAME",
+                    "value": "s3-ror"
                 },
                 {
-                    name = "S3_REGION_NAME"
-                    value = "eu-central-1"
+                    "name": "S3_REGION_NAME",
+                    "value": "eu-central-1"
                 },
                 {
-                    name = "LB_ENDPOINT"
-                    value = "cc-ror-alb-tg:3000"
+                    "name": "LB_ENDPOINT",
+                    "value": "cc-ror-alb-tg:3000"
                 }
             ]
         }
@@ -158,7 +156,7 @@ resource "aws_lb_target_group" "target_group" {
   port        = var.container_port
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = aws_default_vpc.default_vpc.id
+  vpc_id      = var.vpc_id
 }
 
 resource "aws_lb_listener" "listener" {
