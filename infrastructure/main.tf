@@ -1,6 +1,13 @@
 terraform {
   required_version = "~> 1.3"
 
+backend "s3" {
+        bucket         = "s3-ror"
+        key            = "tf-infra/terraform.tfstate"
+        region         = "eu-central-1"
+        db_instance = "tableRoR"
+        encrypt        = true
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
