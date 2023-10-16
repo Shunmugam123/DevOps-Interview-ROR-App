@@ -5,7 +5,6 @@ backend "s3" {
         bucket         = "s3-ror"
         key            = "tf-infra/terraform.tfstate"
         region         = "eu-central-1"
-        table_name     = "tableRoR"
         encrypt        = true
   }
   required_providers {
