@@ -1,11 +1,11 @@
 terraform {
   required_version = "~> 1.3"
 
-backend "s3" {
-        bucket         = "s3-ror"
-        key            = "tf-infra/terraform.tfstate"
-        region         = "eu-central-1"
-        encrypt        = true
+  backend "s3" {
+    bucket  = "s3-ror"
+    key     = "tf-infra/terraform.tfstate"
+    region  = "eu-central-1"
+    encrypt = true
   }
   required_providers {
     aws = {
@@ -22,19 +22,19 @@ module "tf_state" {
 }
 
 module "ecrRepo" {
-    source = "./modules/ecr"
+  source = "./modules/ecr"
 
-    ecr_repo_name = local.ecr_repo_name
-    ecr_repo_name1 = local.ecr_repo_name1
-    ecr_repo_name2 = local.ecr_repo_name2
-    ecr_repo_name3 = local.ecr_repo_name3
+  ecr_repo_name  = local.ecr_repo_name
+  ecr_repo_name1 = local.ecr_repo_name1
+  ecr_repo_name2 = local.ecr_repo_name2
+  ecr_repo_name3 = local.ecr_repo_name3
 }
 
 module "ecsCluster" {
-    source = "./modules/ecs"
+  source = "./modules/ecs"
 
     ror_app_cluster_name = local.ror_app_cluster_name
-    availability_zones    = local.availability_zones
+    availability_zones   = local.availability_zones
 
     ror_app_task_family          = local.ror_app_task_family
     ecr_repo_url                 = module.ecrRepo.repository_url
