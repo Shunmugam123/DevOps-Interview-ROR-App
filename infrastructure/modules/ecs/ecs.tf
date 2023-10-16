@@ -52,8 +52,8 @@ resource "aws_ecs_task_definition" "ror_app_task" {
             "essential": true,
             "portMappings": [
                 {
-                    "containerPort": ${var.container_port1},
-                    "hostPort": ${var.container_port1}
+                    "containerPort": ${var.container_port2},
+                    "hostPort": ${var.container_port2}
                 }
             ],
             "memory": 512,
@@ -71,7 +71,41 @@ resource "aws_ecs_task_definition" "ror_app_task" {
                 }
             ],
             "memory": 512,
-            "cpu": 256
+            "cpu": 256,
+            environment = [
+                {
+                    name = "RDS_DB_NAME"
+                    value = "rails"
+                },
+                {
+                    name = "RDS_USERNAME"
+                    value = "myuser"
+                },
+                {
+                    name = "RDS_PASSWORD"
+                    value = "mypassword"
+                },
+                {
+                    name = "RDS_HOSTNAME"
+                    value = "postgres"
+                },
+                {
+                    name = "RDS_PORT"
+                    value = "5433"
+                },
+                {
+                    name = "S3_BUCKET_NAME"
+                    value = "s3-ror"
+                },
+                {
+                    name = "S3_REGION_NAME"
+                    value = "eu-central-1"
+                },
+                {
+                    name = "LB_ENDPOINT"
+                    value = "cc-ror-alb-tg:3000"
+                }
+            ]
         }
     ]
     DEFINITION

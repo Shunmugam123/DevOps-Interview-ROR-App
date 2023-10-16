@@ -43,6 +43,11 @@ variable "container_port1" {
     type        = number
 }
 
+variable "container_port2" {
+    description = "Container Port2"
+    type        = number
+}
+
 variable "ror_app_task_name" {
     description = "ECS Task Name"
     type        = string
